@@ -1,13 +1,11 @@
 import smtplib
 from common.menuOpt import MenuOpt
 from models.login import Login
+from models.mail import Mail
+from models.status import Status
 from models.user import User
 from models.enterShift import EnterShift
-
-file_path = "C:\WorkShifts"
-work_name = "\QuaDream.csv"
-certificate = "\certificate.json"
-domain = "Gmail"
+from common.handler import *
 
 
 def login():
@@ -21,13 +19,13 @@ def enter_shift():
 
 
 def view_status():
-    pass
+    current_status = Status(file_path + work_name)
+    current_status.show_status()
 
 
 def send_mail(user):
-    session = smtplib.SMTP(f'smtp.{domain}.com', port=587)
-    session.ehlo()
-    session.starttls()
+    export = Mail(domain=domain, port=port, user=user, file_path=file_path + work_name)
+    export.send_mail()
 
 
 def main_menu():
@@ -41,19 +39,19 @@ def main_menu():
                                f'3-> View Current Hours Status\n'
                                f'4 -> Export To Mail\n'
                                f'Enter your choice: '))
-            if choice == MenuOpt.LOGIN:
+            if choice == MenuOpt.LOGIN.value:
                 user_details = login()
                 user = User(user_details["username"], user_details["password"])
-            elif choice == MenuOpt.ENTER_SHIFT:
+            elif choice == MenuOpt.ENTER_SHIFT.value:
                 enter_shift()
-            elif choice == MenuOpt.CURRENT_STATUS:
+            elif choice == MenuOpt.CURRENT_STATUS.value:
                 view_status()
-            elif choice == MenuOpt.SEND_MAIL:
+            elif choice == MenuOpt.SEND_MAIL.value:
                 send_mail(user)
             else:
                 exit(0)
     except Exception as err:
-        print(f'Error has occur {repr(err)}')
+        Logger.error(f'Error has occur {repr(err)}')
 
     finally:
         exit(0)

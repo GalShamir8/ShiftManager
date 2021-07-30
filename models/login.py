@@ -1,5 +1,7 @@
 import json
 import os
+from logging import Logger
+
 from common.handler import check_valid_mail
 
 class Login:
@@ -24,6 +26,7 @@ class Login:
             data["password"] = password
             with open(self.file_path, mode='w') as jsonfile:
                 json.dump(data, jsonfile)
-                print(f'\nSaved successfully to file: {self.file_path}\n')
+                Logger.info(f'\nSaved successfully to file: {self.file_path}\n')
 
+            Logger.info('Login success')
             return data

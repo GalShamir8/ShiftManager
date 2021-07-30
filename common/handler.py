@@ -1,13 +1,19 @@
 import datetime
 import re
+from logging import Logger
 
+file_path = "C:\WorkShifts"
+work_name = "\QuaDream.csv"
+certificate = "\certificate.json"
+domain = "Gmail"
+port = 587
+MAIL_CONTENT = "Sent by Gal's script"
 header = ["Date", "Day", "Start hour", "Exit Hour", "Total Hours"]
 dt = datetime.datetime.today()
 
+
 '''Function for checking validate mail
    return True/False accordingly '''
-
-
 def check_valid_mail(username):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if username is None:
@@ -73,4 +79,4 @@ def update_table(writer):
 
         writer.writerow(file_dict)
     except Exception as err:
-        print(repr(err))
+        Logger.error(f'{repr(err)}')

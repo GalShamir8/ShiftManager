@@ -1,6 +1,9 @@
+import csv
 import datetime
 import re
-from logging import Logger
+from csv import DictWriter, DictReader
+
+from common.logger import logger
 
 file_path = "C:\WorkShifts"
 work_name = "\QuaDream.csv"
@@ -11,9 +14,10 @@ MAIL_CONTENT = "Sent by Gal's script"
 header = ["Date", "Day", "Start hour", "Exit Hour", "Total Hours"]
 dt = datetime.datetime.today()
 
-
 '''Function for checking validate mail
    return True/False accordingly '''
+
+
 def check_valid_mail(username):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if username is None:
@@ -67,16 +71,41 @@ def get_hours():
         raise err
 
 
-def update_table(writer):
+'''
+Func: update_table
+Params:
+    - writer DictWriter to file
+    - index -> in case of overwrite data : index = line to overwrite
+'''
+
+
+def update_table(writer: DictWriter):
     try:
         hours = get_hours()
         total_hours = calc_hours(hours[0], hours[1])
         values = [dt.strftime("%d/%m/%y"), dt.now().strftime("%A"), f'{hours[0][0]} : {hours[0][1]}',
                   f'{hours[1][0]} : {hours[1][1]}', f'{str(total_hours[0])} : {str(total_hours[1])}']
         file_dict = {}
+        dict(file_dict)
         for field, value in zip(header, values):
             file_dict[field] = str(value)
-
         writer.writerow(file_dict)
+
     except Exception as err:
-        Logger.error(f'{repr(err)}')
+        logger.error(f'{repr(err)}')
+
+
+'''
+Func: print_table
+params: table to print
+pretty print for current status work hours
+'''
+
+def print_table(table):
+    for table_title in header:
+        print(table_title.rjust(12), end='  |  ')
+    print()
+    for row in table:
+        for cell in header:
+            print(row[cell].rjust(12), end='  |  ')
+        print()

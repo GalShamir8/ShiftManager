@@ -2,8 +2,7 @@ import smtplib
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from logging import Logger
-
+from common.logger import logger
 from common.handler import dt, MAIL_CONTENT
 
 
@@ -37,5 +36,5 @@ class Mail:
             session.sendmail(self.user.username, self.user.username, message)
             session.quit()
         except Exception as err:
-            Logger.error(f'{repr(err)}')
-        Logger.info("Mail sent successfully")
+            logger.error(f'{repr(err)}')
+        logger.info("Mail sent successfully")

@@ -1,6 +1,6 @@
 import csv
 import os
-from logging import Logger
+from common.logger import logger
 
 from common.handler import *
 
@@ -18,8 +18,9 @@ class EnterShift:
                 writer.writeheader()
             try:
                 update_table(writer)
-                Logger.info(f'\nSaved successfully to file: {self.file_path}\n')
-                # print(f'\nSaved successfully to file: {self.file_path}\n')
+                logger.info(f'\nSaved successfully to file: {self.file_path}\n')
+                print(f'\nSaved successfully to file: {self.file_path}\n')
             except Exception as err:
-                Logger.error(f'{repr(err)}')
-                # print(f'{repr(err)}')
+                logger.error(f'{repr(err)}')
+                print(f'{repr(err)}')
+

@@ -1,4 +1,3 @@
-import smtplib
 from common.menuOpt import MenuOpt
 from models.login import Login
 from models.mail import Mail
@@ -51,7 +50,7 @@ def main_menu():
             else:
                 exit(0)
     except Exception as err:
-        Logger.error(f'Error has occur {repr(err)}')
+        logger.error(f'Error has occur {repr(err)}')
 
     finally:
         exit(0)

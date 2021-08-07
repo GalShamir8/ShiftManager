@@ -19,7 +19,7 @@ class EnterShift:
             try:
                 update_table(writer)
                 logger.info(f'\nSaved successfully to file: {self.file_path}\n')
-                print(f'\nSaved successfully to file: {self.file_path}\n')
+                # print(f'\nSaved successfully to file: {self.file_path}\n')
             except Exception as err:
                 logger.error(f'{repr(err)}')
                 print(f'{repr(err)}')

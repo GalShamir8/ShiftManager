@@ -1,18 +1,16 @@
-import csv
 import datetime
 import re
-from csv import DictWriter, DictReader
+from csv import DictWriter
 
-from common.logger import logger
+dt = datetime.datetime.today()
 
-file_path = "C:\WorkShifts"
-work_name = "\QuaDream.csv"
-certificate = "\certificate.json"
+file_path = r"C:\WorkShifts"
+work_name = f"\QuaDream{dt.strftime('%B')}.csv"
+certificate = r"\certificate.json"
 domain = "Gmail"
 port = 587
 MAIL_CONTENT = "Sent by Gal's script"
 header = ["Date", "Day", "Start hour", "Exit Hour", "Total Hours"]
-dt = datetime.datetime.today()
 
 '''Function for checking validate mail
    return True/False accordingly '''
@@ -90,9 +88,8 @@ def update_table(writer: DictWriter):
         for field, value in zip(header, values):
             file_dict[field] = str(value)
         writer.writerow(file_dict)
-
     except Exception as err:
-        logger.error(f'{repr(err)}')
+        raise err
 
 
 '''
@@ -100,6 +97,7 @@ Func: print_table
 params: table to print
 pretty print for current status work hours
 '''
+
 
 def print_table(table):
     for table_title in header:
@@ -109,3 +107,10 @@ def print_table(table):
         for cell in header:
             print(row[cell].rjust(12), end='  |  ')
         print()
+
+
+# TODO add calc all hours func
+def add_hours_summery():
+    with open(file_path, mode='a', newline='') as csvfile:
+        writer = DictWriter(csvfile, fieldnames=header)
+    pass

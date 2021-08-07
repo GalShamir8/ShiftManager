@@ -1,3 +1,4 @@
+from common.logger import logger
 from common.menuOpt import MenuOpt
 from models.login import Login
 from models.mail import Mail
@@ -23,6 +24,7 @@ def view_status():
 
 
 def send_mail(user):
+    add_hours_summery()
     export = Mail(domain=domain, port=port, user=user, file_path=file_path + work_name)
     export.send_mail()
 

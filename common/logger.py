@@ -2,7 +2,7 @@ import logging
 import os
 
 file_name = "logs.log"
-file_path = os.getcwd() + f"{file_name}"
+file_path = os.getcwd() + r"{file_name}"
 
 logs_format = '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)d %(funcName)s - %(message)s'
 
@@ -17,7 +17,7 @@ logging.basicConfig(
 console = logging.StreamHandler()
 console.setLevel(logging.DEBUG)
 # set a format which is simpler for console use
-formatter = logging.Formatter('\nLogger.%(levelname)s:  %(asctime)s  %(funcName)s -  %(message)s\n')
+formatter = logging.Formatter('\nLogger.%(levelname)s:  %(asctime)s  %(funcName)s -  %(message)s')
 console.setFormatter(formatter)
 # add the handler to the root logger
 logging.getLogger('').addHandler(console)

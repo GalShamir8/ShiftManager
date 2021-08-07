@@ -35,6 +35,6 @@ class Mail:
             session.login(self.user.username, self.user.password)
             session.sendmail(self.user.username, self.user.username, message)
             session.quit()
+            logger.info("Mail sent successfully")
         except Exception as err:
             logger.error(f'{repr(err)}')
-        logger.info("Mail sent successfully")
